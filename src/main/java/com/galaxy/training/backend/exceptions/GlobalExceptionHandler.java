@@ -13,7 +13,7 @@ import com.galaxy.training.backend.dtos.out.ErrorResponseDto;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({ 
-        RecursoNoExistenteException.class, 
+        EscuelaConductorNoExistenteException.class, 
         DepartamentoNoExistenteException.class,
         ProvinciaNoExistenteException.class, 
         DistritoNoExistenteException.class })

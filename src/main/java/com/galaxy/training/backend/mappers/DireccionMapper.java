@@ -10,6 +10,7 @@ import com.galaxy.training.backend.entities.DepartamentoEntity;
 import com.galaxy.training.backend.entities.DireccionEntity;
 import com.galaxy.training.backend.entities.DistritoEntity;
 import com.galaxy.training.backend.entities.ProvinciaEntity;
+import com.galaxy.training.backend.exceptions.DistritoNoExistenteException;
 import com.galaxy.training.backend.repositories.DistritoRepository;
 
 @Service
@@ -25,7 +26,7 @@ public class DireccionMapper {
         DireccionEntity entity = new DireccionEntity();
 
         DistritoEntity distrito = distritoRepository.findById(distritoId)
-                .orElseThrow(() -> new IllegalArgumentException("Distrito no encontrado con ID: " + distritoId));
+                .orElseThrow(() -> new DistritoNoExistenteException("Distrito no encontrado con ID: " + distritoId));
 
         ProvinciaEntity provincia = distrito.getProvincia();
         DepartamentoEntity departamento = distrito.getDepartamento();

@@ -10,6 +10,8 @@ import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
 import com.galaxy.training.backend.entities.DepartamentoEntity;
 import com.galaxy.training.backend.entities.DireccionEntity;
 import com.galaxy.training.backend.entities.ProvinciaEntity;
+import com.galaxy.training.backend.exceptions.DepartamentoNoExistenteException;
+import com.galaxy.training.backend.exceptions.ProvinciaNoExistenteException;
 import com.galaxy.training.backend.mappers.DireccionMapper;
 import com.galaxy.training.backend.repositories.DepartamentoRepository;
 import com.galaxy.training.backend.repositories.DireccionRepository;
@@ -39,26 +41,23 @@ public class DireccionServiceImpl implements DireccionService {
         return departamentos;
     }
 
-    @SuppressWarnings("null")
     @Override
     public List<ProvinciaResponseDto> getProvinciasByDepartamentoId(Integer departamentoId) {
         DepartamentoEntity departamento = departamentoRepository.findById(departamentoId)
-            .orElseThrow(() -> new IllegalArgumentException("Departamento no encontrado con ID: " + departamentoId));
+            .orElseThrow(() -> new DepartamentoNoExistenteException("Departamento no encontrado con ID: " + departamentoId));
 
         List<ProvinciaResponseDto> provincias = provinciaRepository.findByDepartamentoId(departamento.getId()).stream().map(entity -> direccionMapper.toProvinciaDto(entity)).toList();
         return provincias;
     }
 
-    @SuppressWarnings("null")
     @Override
     public List<DistritoResponseDto> getDistritosByProvinciaId(Integer provinciaId) {
         ProvinciaEntity provincia = provinciaRepository.findById(provinciaId)
-            .orElseThrow(() -> new IllegalArgumentException("Provincia no encontrada con ID: " + provinciaId));
+            .orElseThrow(() -> new ProvinciaNoExistenteException("Provincia no encontrada con ID: " + provinciaId));
         List<DistritoResponseDto> distritos = distritoRepository.findByProvinciaId(provincia.getId()).stream().map(entity -> direccionMapper.toDistritoDto(entity)).toList();
         return distritos;
     }
 
-    @SuppressWarnings("null")
     @Override
     public DireccionEntity createDireccion(String detalle, Integer distritoId) {
         

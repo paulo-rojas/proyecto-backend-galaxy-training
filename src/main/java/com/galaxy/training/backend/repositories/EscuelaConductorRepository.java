@@ -9,4 +9,5 @@ import com.galaxy.training.backend.entities.EscuelaConductorEntity;
 public interface EscuelaConductorRepository extends JpaRepository<EscuelaConductorEntity, Integer> {
 
     public boolean existsByRuc(String ruc);
+
 }
