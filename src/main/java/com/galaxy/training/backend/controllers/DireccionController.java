@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galaxy.training.backend.entities.DepartamentoEntity;
-import com.galaxy.training.backend.entities.DistritoEntity;
-import com.galaxy.training.backend.entities.ProvinciaEntity;
+import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
+import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
 import com.galaxy.training.backend.services.DireccionService;
 
 @RestController
@@ -24,19 +24,20 @@ public class DireccionController {
     }
 
     @GetMapping("/departamentos")
-    public ResponseEntity<List<DepartamentoEntity>> getDepartamentos() {
-        return ResponseEntity.ok(direccionService.getDepartamentos());
+    public ResponseEntity<List<DepartamentoResponseDto>> getDepartamentos() {
+        List<DepartamentoResponseDto> departamentos = direccionService.getDepartamentos();
+        return departamentos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(departamentos);
     }
 
     @GetMapping("/provincias")
-    public ResponseEntity<List<ProvinciaEntity>> getProvinciasByDepartamentoId(@RequestParam(name = "departamentoId") Integer departamentoId) {
-        List <ProvinciaEntity> provincias = direccionService.getProvinciasByDepartamentoId(departamentoId);
+    public ResponseEntity<List<ProvinciaResponseDto>> getProvinciasByDepartamentoId(@RequestParam(name = "departamentoId") Integer departamentoId) {
+        List <ProvinciaResponseDto> provincias = direccionService.getProvinciasByDepartamentoId(departamentoId);
         return provincias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(provincias);
     }
 
     @GetMapping("/distritos")
-    public ResponseEntity<List<DistritoEntity>> getDistritosByProvinciaId(@RequestParam(name = "provinciaId") Integer provinciaId) {
-        List<DistritoEntity> distritos = direccionService.getDistritosByProvinciaId(provinciaId);
+    public ResponseEntity<List<DistritoResponseDto>> getDistritosByProvinciaId(@RequestParam(name = "provinciaId") Integer provinciaId) {
+        List<DistritoResponseDto> distritos = direccionService.getDistritosByProvinciaId(provinciaId);
         return distritos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(distritos);
     }
 }
