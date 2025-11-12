@@ -4,10 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dtos.out.DistritoFiltroResponseDto;
+import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
+import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
 import com.galaxy.training.backend.entities.DepartamentoEntity;
-import com.galaxy.training.backend.entities.DistritoEntity;
+import com.galaxy.training.backend.entities.DireccionEntity;
 import com.galaxy.training.backend.entities.ProvinciaEntity;
+import com.galaxy.training.backend.exceptions.DepartamentoNoExistenteException;
+import com.galaxy.training.backend.exceptions.ProvinciaNoExistenteException;
+import com.galaxy.training.backend.mappers.DireccionMapper;
 import com.galaxy.training.backend.repositories.DepartamentoRepository;
+import com.galaxy.training.backend.repositories.DireccionRepository;
 import com.galaxy.training.backend.repositories.DistritoRepository;
 import com.galaxy.training.backend.repositories.ProvinciaRepository;
 
@@ -17,35 +25,55 @@ public class DireccionServiceImpl implements DireccionService {
     private final DepartamentoRepository departamentoRepository;
     private final ProvinciaRepository provinciaRepository;
     private final DistritoRepository distritoRepository;
+    private final DireccionMapper direccionMapper;
+    private final DireccionRepository direccionRepository;
 
-    public DireccionServiceImpl(DepartamentoRepository departamentoRepository, ProvinciaRepository provinciaRepository, DistritoRepository distritoRepository) {
+    public DireccionServiceImpl(DepartamentoRepository departamentoRepository, ProvinciaRepository provinciaRepository, DistritoRepository distritoRepository, DireccionMapper direccionMapper, DireccionRepository direccionRepository) {
         this.departamentoRepository = departamentoRepository;
         this.provinciaRepository = provinciaRepository;
         this.distritoRepository = distritoRepository;
+        this.direccionMapper = direccionMapper;
+        this.direccionRepository = direccionRepository;
     }
 
     @Override
-    public List<DepartamentoEntity> getDepartamentos() {
-        return departamentoRepository.findAll();
+    public List<DepartamentoResponseDto> getDepartamentos() {
+        List<DepartamentoResponseDto> departamentos = departamentoRepository.findAll().stream().map(entity -> direccionMapper.toDepartamentoDto(entity)).toList();
+        return departamentos;
     }
 
-    @SuppressWarnings("null")
     @Override
-    public List<ProvinciaEntity> getProvinciasByDepartamentoId(Integer departamentoId) {
+    public List<ProvinciaResponseDto> getProvinciasByDepartamentoId(Integer departamentoId) {
         DepartamentoEntity departamento = departamentoRepository.findById(departamentoId)
-            .orElseThrow(() -> new IllegalArgumentException("Departamento no encontrado con ID: " + departamentoId));
+            .orElseThrow(() -> new DepartamentoNoExistenteException("Departamento no encontrado con ID: " + departamentoId));
 
-        List<ProvinciaEntity> provincias = provinciaRepository.findByDepartamentoId(departamento.getId());
+        List<ProvinciaResponseDto> provincias = provinciaRepository.findByDepartamentoId(departamento.getId()).stream().map(entity -> direccionMapper.toProvinciaDto(entity)).toList();
         return provincias;
     }
 
-    @SuppressWarnings("null")
     @Override
-    public List<DistritoEntity> getDistritosByProvinciaId(Integer provinciaId) {
+    public List<DistritoResponseDto> getDistritosByProvinciaId(Integer provinciaId) {
         ProvinciaEntity provincia = provinciaRepository.findById(provinciaId)
-            .orElseThrow(() -> new IllegalArgumentException("Provincia no encontrada con ID: " + provinciaId));
-        List<DistritoEntity> distritos = distritoRepository.findByProvinciaId(provincia.getId());
+            .orElseThrow(() -> new ProvinciaNoExistenteException("Provincia no encontrada con ID: " + provinciaId));
+        List<DistritoResponseDto> distritos = distritoRepository.findByProvinciaId(provincia.getId()).stream().map(entity -> direccionMapper.toDistritoDto(entity)).toList();
         return distritos;
     }
+
+    @Override
+    public DireccionEntity createDireccion(String detalle, Integer distritoId) {
+        
+        DireccionEntity direccionEntity = direccionMapper.toDireccionEntity(detalle, distritoId);
+
+        direccionEntity = direccionRepository.save(direccionEntity);
+        return direccionEntity;
+    }
+
+    @Override
+    public List<DistritoFiltroResponseDto> getPosibleDireccionByNombre(String nombre) {
+        return distritoRepository.findByNombreInAnyLevel(nombre).stream()
+                .map(entity -> direccionMapper.toDistritoFiltroDto(entity))
+                .toList();
+    }
+
 
 }
