@@ -15,11 +15,11 @@ import com.galaxy.training.backend.services.DireccionService;
 
 @RestController
 @RequestMapping("/api/direcciones")
-public class DireccionController {
+public class DireccionPublicController {
 
     private final DireccionService direccionService;
 
-    public DireccionController(DireccionService direccionService) {
+    public DireccionPublicController(DireccionService direccionService) {
         this.direccionService = direccionService;
     }
 

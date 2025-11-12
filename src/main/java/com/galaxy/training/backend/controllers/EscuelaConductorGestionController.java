@@ -21,15 +21,16 @@ import com.galaxy.training.backend.dtos.in.EscuelaConductorRequestDto;
 import com.galaxy.training.backend.dtos.out.EscuelaConductorResponseDto;
 import com.galaxy.training.backend.hateoas.EscuelaConductorAssembler;
 import com.galaxy.training.backend.services.EscuelaConductorService;
+
 @RestController
-@RequestMapping("/api/escuelas-conductores")
-public class EscuelaConductorController {
+@RequestMapping("/api/gestion/escuelas")
+public class EscuelaConductorGestionController {
 
     private final EscuelaConductorService escuelaConductorService;
     private final EscuelaConductorAssembler assembler;
     private final PagedResourcesAssembler<EscuelaConductorResponseDto> pagedResourcesAssembler;
 
-    public EscuelaConductorController(EscuelaConductorService escuelaConductorService,
+    public EscuelaConductorGestionController(EscuelaConductorService escuelaConductorService,
                                      EscuelaConductorAssembler assembler,
                                      PagedResourcesAssembler<EscuelaConductorResponseDto> pagedResourcesAssembler) {
         this.escuelaConductorService = escuelaConductorService;

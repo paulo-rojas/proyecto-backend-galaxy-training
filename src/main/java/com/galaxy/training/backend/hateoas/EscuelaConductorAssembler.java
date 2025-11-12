@@ -9,7 +9,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Component;
 
-import com.galaxy.training.backend.controllers.EscuelaConductorController;
+import com.galaxy.training.backend.controllers.EscuelaConductorGestionController;
 import com.galaxy.training.backend.dtos.out.EscuelaConductorResponseDto;
 
 
@@ -21,11 +21,11 @@ public class EscuelaConductorAssembler implements RepresentationModelAssembler<E
 	public EntityModel<EscuelaConductorResponseDto> toModel(@NonNull EscuelaConductorResponseDto dto) {
 		EntityModel<EscuelaConductorResponseDto> model = EntityModel.of(dto);
 
-		model.add(linkTo(methodOn(EscuelaConductorController.class).getEscuelaConductorById(dto.getId())).withSelfRel());
+		model.add(linkTo(methodOn(EscuelaConductorGestionController.class).getEscuelaConductorById(dto.getId())).withSelfRel());
 
-		model.add(linkTo(methodOn(EscuelaConductorController.class).updateEscuelaConductor(dto.getId(), null)).withRel("update"));
+		model.add(linkTo(methodOn(EscuelaConductorGestionController.class).updateEscuelaConductor(dto.getId(), null)).withRel("update"));
 
-		model.add(linkTo(methodOn(EscuelaConductorController.class).deleteEscuelaConductor(dto.getId())).withRel("delete"));
+		model.add(linkTo(methodOn(EscuelaConductorGestionController.class).deleteEscuelaConductor(dto.getId())).withRel("delete"));
 
 		return model;
 	}
