@@ -6,6 +6,8 @@ import com.galaxy.training.backend.dtos.in.EscuelaConductorRequestDto;
 import com.galaxy.training.backend.dtos.out.EscuelaConductorResponseDto;
 import com.galaxy.training.backend.entities.DireccionEntity;
 import com.galaxy.training.backend.entities.EscuelaConductorEntity;
+import com.galaxy.training.backend.exceptions.EscuelaConductorDuplicadoException;
+import com.galaxy.training.backend.exceptions.RecursoNoExistenteException;
 import com.galaxy.training.backend.mappers.EscuelaConductorMapper;
 import com.galaxy.training.backend.repositories.EscuelaConductorRepository;
 
@@ -31,12 +33,8 @@ public class EscuelaConductorServiceImpl implements EscuelaConductorService {
     @Override
     public EscuelaConductorResponseDto createEscuelaConductor(@Valid EscuelaConductorRequestDto dto) {
 
-        if (dto == null) {
-            throw new IllegalArgumentException("El objeto EscuelaConductorRequestDto no puede ser nulo");
-        }
-
         if (escuelaConductorRepository.existsByRuc(dto.getRuc())) {
-            throw new IllegalArgumentException("El RUC ya está registrado: " + dto.getRuc());
+            throw new EscuelaConductorDuplicadoException("El RUC ya está registrado: " + dto.getRuc());
         }
         
         DireccionEntity direccion = direccionService.createDireccion(dto.getDireccion(), dto.getDistritoId());
@@ -51,7 +49,7 @@ public class EscuelaConductorServiceImpl implements EscuelaConductorService {
     @Override
     public void deleteEscuelaConductor(@Valid Integer escuelaId) {
         EscuelaConductorEntity escuelaConductorEntity = escuelaConductorRepository.findById(escuelaId)
-            .orElseThrow(() -> new IllegalArgumentException("Escuela de Conductor no encontrada con ID: " + escuelaId));
+            .orElseThrow(() -> new RecursoNoExistenteException("Escuela de Conductor no encontrada con ID: " + escuelaId));
 
         escuelaConductorEntity.setEstado("Inactivo");
     }
@@ -61,7 +59,7 @@ public class EscuelaConductorServiceImpl implements EscuelaConductorService {
             @Valid EscuelaConductorRequestDto escuelaConductorRequestDto) {
         
         EscuelaConductorEntity escuelaConductorEntity = escuelaConductorRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Escuela de Conductor no encontrada con ID: " + id));
+            .orElseThrow(() -> new RecursoNoExistenteException("Escuela de Conductor no encontrada con ID: " + id));
 
         escuelaConductorEntity.setNombreEstablecimiento(escuelaConductorRequestDto.getNombreEstablecimiento());
         escuelaConductorEntity.setRuc(escuelaConductorRequestDto.getRuc());
@@ -73,7 +71,7 @@ public class EscuelaConductorServiceImpl implements EscuelaConductorService {
     @Override
     public EscuelaConductorResponseDto getEscuelaConductorById(@Valid Integer id) {
         EscuelaConductorEntity escuelaConductorEntity = escuelaConductorRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Escuela de Conductor no encontrada con ID: " + id));
+            .orElseThrow(() -> new RecursoNoExistenteException("Escuela de Conductor no encontrada con ID: " + id));
         return escuelaConductorMapper.toDto(escuelaConductorEntity);
     }
 
