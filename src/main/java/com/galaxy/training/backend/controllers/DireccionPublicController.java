@@ -23,6 +23,11 @@ public class DireccionPublicController {
         this.direccionService = direccionService;
     }
 
+    @GetMapping("/find-by-nombre")
+    public ResponseEntity<?> getPosibleDireccionByNombre(@RequestParam(name = "nombre") String nombre) {
+        return ResponseEntity.ok(direccionService.getPosibleDireccionByNombre(nombre));
+    }
+
     @GetMapping("/departamentos")
     public ResponseEntity<List<DepartamentoResponseDto>> getDepartamentos() {
         List<DepartamentoResponseDto> departamentos = direccionService.getDepartamentos();

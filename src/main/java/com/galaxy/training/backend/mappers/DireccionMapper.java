@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
 import com.galaxy.training.backend.dtos.out.DireccionResponseDto;
+import com.galaxy.training.backend.dtos.out.DistritoFiltroResponseDto;
 import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
 import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
 import com.galaxy.training.backend.entities.DepartamentoEntity;
@@ -69,4 +70,14 @@ public class DireccionMapper {
         return dto;
     }
 
+    public DistritoFiltroResponseDto toDistritoFiltroDto(DistritoEntity entity) {
+        DistritoFiltroResponseDto dto = new DistritoFiltroResponseDto();
+        dto.setDistritoId(entity.getId());
+        String posibleDireccion = String.format("%s, %s, %s",
+                entity.getDepartamento().getNombre(),
+                entity.getProvincia().getNombre(),
+                entity.getNombre());
+        dto.setPosibleDireccion(posibleDireccion);
+        return dto;
+    }
 }

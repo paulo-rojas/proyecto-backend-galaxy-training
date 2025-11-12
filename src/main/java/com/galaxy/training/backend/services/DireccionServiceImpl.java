@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dtos.out.DistritoFiltroResponseDto;
 import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
 import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
 import com.galaxy.training.backend.entities.DepartamentoEntity;
@@ -66,5 +67,13 @@ public class DireccionServiceImpl implements DireccionService {
         direccionEntity = direccionRepository.save(direccionEntity);
         return direccionEntity;
     }
+
+    @Override
+    public List<DistritoFiltroResponseDto> getPosibleDireccionByNombre(String nombre) {
+        return distritoRepository.findByNombreInAnyLevel(nombre).stream()
+                .map(entity -> direccionMapper.toDistritoFiltroDto(entity))
+                .toList();
+    }
+
 
 }
