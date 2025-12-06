@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.dtos.in;
+package com.galaxy.training.backend.dto.in;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -23,13 +23,12 @@ public class EscuelaConductorRequestDto {
     @Pattern(regexp = "\\d{11}")
     private String ruc;
 
-    @NotBlank
-    @Pattern(regexp = "^(ACTIVO|INACTIVO)$")
-    private String estado;
+    @NotNull
+    private Integer estado;
 
     @NotBlank
     @Size(max = 200)
-    private String direccion;
+    private String detalleDireccion;
 
     @NotNull
     @Min(value = 1)

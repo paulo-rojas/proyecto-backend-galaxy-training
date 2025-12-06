@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.dtos.in;
+package com.galaxy.training.backend.dto.in;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

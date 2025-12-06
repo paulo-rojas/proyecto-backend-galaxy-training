@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.dtos.out;
+package com.galaxy.training.backend.dto.out;
 
 import lombok.Getter;
 import lombok.Setter;

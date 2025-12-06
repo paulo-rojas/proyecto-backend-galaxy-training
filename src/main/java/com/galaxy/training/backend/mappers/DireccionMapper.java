@@ -2,15 +2,15 @@ package com.galaxy.training.backend.mappers;
 
 import org.springframework.stereotype.Service;
 
-import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
-import com.galaxy.training.backend.dtos.out.DireccionResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoFiltroResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
-import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
-import com.galaxy.training.backend.entities.DepartamentoEntity;
-import com.galaxy.training.backend.entities.DireccionEntity;
-import com.galaxy.training.backend.entities.DistritoEntity;
-import com.galaxy.training.backend.entities.ProvinciaEntity;
+import com.galaxy.training.backend.dto.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dto.out.DireccionResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoFiltroResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoResponseDto;
+import com.galaxy.training.backend.dto.out.ProvinciaResponseDto;
+import com.galaxy.training.backend.entity.DepartamentoEntity;
+import com.galaxy.training.backend.entity.DireccionEntity;
+import com.galaxy.training.backend.entity.DistritoEntity;
+import com.galaxy.training.backend.entity.ProvinciaEntity;
 import com.galaxy.training.backend.exceptions.DistritoNoExistenteException;
 import com.galaxy.training.backend.repositories.DistritoRepository;
 
@@ -42,7 +42,7 @@ public class DireccionMapper {
     public DireccionResponseDto toDireccionDto(DireccionEntity entity) {
         DireccionResponseDto dto = new DireccionResponseDto();
         dto.setId(entity.getId());
-        dto.setDetalle(entity.getDetalle());
+        dto.setDetalleDireccion(entity.getDetalle());
         dto.setDistrito(entity.getDistrito().getNombre());
         dto.setProvincia(entity.getProvincia().getNombre());
         dto.setDepartamento(entity.getDepartamento().getNombre());
@@ -73,6 +73,8 @@ public class DireccionMapper {
     public DistritoFiltroResponseDto toDistritoFiltroDto(DistritoEntity entity) {
         DistritoFiltroResponseDto dto = new DistritoFiltroResponseDto();
         dto.setDistritoId(entity.getId());
+        dto.setProvinciaId(entity.getProvincia().getId());
+        dto.setDepartamentoId(entity.getDepartamento().getId());
         String posibleDireccion = String.format("%s, %s, %s",
                 entity.getDepartamento().getNombre(),
                 entity.getProvincia().getNombre(),

@@ -9,8 +9,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Component;
 
-import com.galaxy.training.backend.controllers.EscuelaConductorGestionController;
-import com.galaxy.training.backend.dtos.out.EscuelaConductorResponseDto;
+import com.galaxy.training.backend.controller.EscuelaConductorGestionController;
+import com.galaxy.training.backend.dto.out.EscuelaConductorResponseDto;
 
 
 @Component

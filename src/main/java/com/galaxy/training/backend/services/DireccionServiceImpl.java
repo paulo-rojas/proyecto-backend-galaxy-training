@@ -2,15 +2,16 @@ package com.galaxy.training.backend.services;
 
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoFiltroResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
-import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
-import com.galaxy.training.backend.entities.DepartamentoEntity;
-import com.galaxy.training.backend.entities.DireccionEntity;
-import com.galaxy.training.backend.entities.ProvinciaEntity;
+import com.galaxy.training.backend.dto.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoFiltroResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoResponseDto;
+import com.galaxy.training.backend.dto.out.ProvinciaResponseDto;
+import com.galaxy.training.backend.entity.DepartamentoEntity;
+import com.galaxy.training.backend.entity.DireccionEntity;
+import com.galaxy.training.backend.entity.ProvinciaEntity;
 import com.galaxy.training.backend.exceptions.DepartamentoNoExistenteException;
 import com.galaxy.training.backend.exceptions.ProvinciaNoExistenteException;
 import com.galaxy.training.backend.mappers.DireccionMapper;
@@ -38,7 +39,10 @@ public class DireccionServiceImpl implements DireccionService {
 
     @Override
     public List<DepartamentoResponseDto> getDepartamentos() {
-        List<DepartamentoResponseDto> departamentos = departamentoRepository.findAll().stream().map(entity -> direccionMapper.toDepartamentoDto(entity)).toList();
+        List<DepartamentoResponseDto> departamentos = departamentoRepository.
+        findAll()
+        .stream()
+        .map(entity -> direccionMapper.toDepartamentoDto(entity)).toList();
         return departamentos;
     }
 
@@ -73,6 +77,27 @@ public class DireccionServiceImpl implements DireccionService {
         return distritoRepository.findByNombreInAnyLevel(nombre).stream()
                 .map(entity -> direccionMapper.toDistritoFiltroDto(entity))
                 .toList();
+    }
+
+    @Override
+    public boolean distritoExistsById(Integer distritoId) {
+        return distritoRepository.existsById(distritoId);
+    }
+
+    @Override
+    public boolean provinciaExistsById(Integer provinciaId) {
+        return provinciaRepository.existsById(provinciaId);
+    }
+
+    @Override
+    public boolean departamentoExistsById(Integer departamentoId) {
+        return departamentoRepository.existsById(departamentoId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteDireccion(DireccionEntity d) {
+        direccionRepository.delete(d);
     }
 
 

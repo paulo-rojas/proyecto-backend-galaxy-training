@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.dtos.out;
+package com.galaxy.training.backend.dto.out;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 public class DireccionResponseDto {
 
     private Integer id;
-    private String detalle;
+    private String detalleDireccion;
     private String distrito;
     private String provincia;
     private String departamento;

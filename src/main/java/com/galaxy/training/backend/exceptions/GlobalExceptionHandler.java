@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.galaxy.training.backend.dtos.out.ErrorResponseDto;
+import com.galaxy.training.backend.dto.out.ErrorResponseDto;
 
 
 @ControllerAdvice

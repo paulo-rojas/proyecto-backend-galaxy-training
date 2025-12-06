@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.controllers;
+package com.galaxy.training.backend.controller;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
-import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
+import com.galaxy.training.backend.dto.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoResponseDto;
+import com.galaxy.training.backend.dto.out.ProvinciaResponseDto;
 import com.galaxy.training.backend.services.DireccionService;
 
 @RestController

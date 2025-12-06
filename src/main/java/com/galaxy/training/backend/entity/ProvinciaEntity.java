@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.entities;
+package com.galaxy.training.backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,27 +13,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity(name = "Provincia")
+@Table(name = "provincias")
 @Getter
 @Setter
-@NoArgsConstructor 
+@NoArgsConstructor
 @AllArgsConstructor
 
-@Table(name = "direcciones")
-@Entity(name = "Direccion")
-public class DireccionEntity {
+public class ProvinciaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String detalle;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "distrito_id")
-    private DistritoEntity distrito;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "provincia_id", nullable = false)
-    private ProvinciaEntity provincia;
+    private String nombre;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "departamento_id", nullable = false)

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.galaxy.training.backend.entities.DistritoEntity;
+import com.galaxy.training.backend.entity.DistritoEntity;
 
 @Repository
 public interface DistritoRepository extends JpaRepository<DistritoEntity, Integer> {

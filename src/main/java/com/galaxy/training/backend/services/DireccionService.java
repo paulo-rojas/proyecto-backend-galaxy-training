@@ -2,11 +2,11 @@ package com.galaxy.training.backend.services;
 
 import java.util.List;
 
-import com.galaxy.training.backend.dtos.out.DepartamentoResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoFiltroResponseDto;
-import com.galaxy.training.backend.dtos.out.DistritoResponseDto;
-import com.galaxy.training.backend.dtos.out.ProvinciaResponseDto;
-import com.galaxy.training.backend.entities.DireccionEntity;
+import com.galaxy.training.backend.dto.out.DepartamentoResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoFiltroResponseDto;
+import com.galaxy.training.backend.dto.out.DistritoResponseDto;
+import com.galaxy.training.backend.dto.out.ProvinciaResponseDto;
+import com.galaxy.training.backend.entity.DireccionEntity;
 
 public interface DireccionService {
 
@@ -19,4 +19,12 @@ public interface DireccionService {
     public List<DistritoResponseDto> getDistritosByProvinciaId(Integer provinciaId);
 
     public List<DistritoFiltroResponseDto> getPosibleDireccionByNombre(String nombre);
+
+    public boolean distritoExistsById(Integer distritoId);
+
+    public boolean provinciaExistsById(Integer provinciaId);
+    
+    public boolean departamentoExistsById(Integer departamentoId);
+
+    void deleteDireccion(DireccionEntity direccion);
 }

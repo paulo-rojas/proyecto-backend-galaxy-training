@@ -1,12 +1,11 @@
-package com.galaxy.training.backend.dtos.out;
+package com.galaxy.training.backend.dto.out;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DepartamentoResponseDto {
+public class DistritoResponseDto {
     private Integer id;
     private String nombre;
-
 }

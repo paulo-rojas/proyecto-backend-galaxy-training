@@ -1,4 +1,4 @@
-package com.galaxy.training.backend.entities;
+package com.galaxy.training.backend.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,7 +27,8 @@ public class EscuelaConductorEntity {
     private Integer id;
     private String nombreEstablecimiento;
     private String ruc;
-    private String estado;
+    private Integer estado; // 0: Sin autorización, 1: Con autorización
+    private Boolean eliminado;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "direccion_id", referencedColumnName = "id")
